@@ -1,0 +1,6 @@
+-tree.each do |node|
+	-if node.class.name == 'Source'
+		= render :partial => 'node', :object => node
+	-else
+		%div
+			= render :partial => 'tree', :object => node
