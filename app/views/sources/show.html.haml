@@ -1,11 +1,8 @@
 %div#placeholder{:style => "width: 600px; height: 300px; position: relative;"}
 :javascript
 	$(function () {
-	    var d = [#{@source.samples.map{|sample| [sample.sampled_at.to_i*1000,sample.value]}.to_json}]; 
+	    var d = #{@source.samples.map{|sample| [sample.sampled_at.to_i*1000,sample.value]}.to_json}; 
 
 	    $.plot($("#placeholder"), [d], { xaxis: { mode: "time" } });
 
-	    $("#whole").click(function () {
-	        $.plot($("#placeholder"), [d], { xaxis: { mode: "time" } });
-	    });
 	});
