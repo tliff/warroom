@@ -1,0 +1,7 @@
+-tree.each do |identifier, node|
+	-if node.class.name == 'Source'
+		= render :partial => 'node', :object => node
+	-else
+		%div{:style => 'padding-left:40px;'}
+			= identifier
+			= render :partial => 'tree', :object => node

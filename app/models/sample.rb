@@ -4,7 +4,7 @@ class Sample < ActiveRecord::Base
   end
 
   def timestamp=(t)
-    self.sampled_at = t
+    self.sampled_at = Time.at(t)
   end
 
   def self.create_from_webpush(d)
