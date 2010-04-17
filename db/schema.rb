@@ -9,16 +9,20 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20100409194326) do
-
-  create_table "atoms", :force => true do |t|
-    t.integer "sample_id"
-    t.string  "text"
-    t.string  "identifier"
-  end
+ActiveRecord::Schema.define(:version => 20100416174202) do
 
   create_table "samples", :force => true do |t|
     t.integer  "source_id"
+    t.float    "value"
+    t.string   "sample_type"
+    t.string   "unit"
+    t.datetime "sampled_at"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "secrets", :force => true do |t|
+    t.string   "secret"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
