@@ -15,11 +15,12 @@ role :db,  "rupert.tliff.de", :primary => true
 
 task :after_update_code do
   run "ln -s #{shared_path}/config/database.yml #{release_path}/config/database.yml"
+  run "ln -s #{shared_path}/config/unicorn.rb #{release_path}/config/unicorn.rb"
 end
 
 
 namespace :deploy do
   task :restart do
-    sudo "touch /opt/warroom/current/tmp/restart.txt"
+    sudo "killall -HUP unicorn"
   end  
 end
