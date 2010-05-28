@@ -21,6 +21,6 @@ end
 
 namespace :deploy do
   task :restart do
-    sudo "killall -HUP unicorn"
+    sudo "killall -HUP unicorn || true"
   end  
 end
