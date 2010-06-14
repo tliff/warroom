@@ -1,0 +1,9 @@
+-form_for @graph do |f|
+	%ul
+		%li
+			=f.label :name 
+			=f.text_field :name
+		%li
+			=f.label :stack_type
+			=f.select :stack_type, options_for_select({ "Area Stack"=> "area", "Normalized Stack Area" => "normalizedarea", "Lines" => "lines"})
+	=f.submit "Create"

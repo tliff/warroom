@@ -1,0 +1,30 @@
+%h2 Edit Graph #{@graph.name}
+=render :partial => 'form'
+-if @graph.graph_lines.size > 0
+	%ul
+		-@graph.graph_lines.each do |gl|
+			%li
+				= gl.name
+				%span{:style => "color:#{gl.color}"} COLOR
+				=link_to "edit"
+				=link_to "delete"
+
+-else
+	No sources defined
+	
+%h4 Add Source
+%ul
+	-@sources.each do |s|
+		%li
+			= s.identifier
+			-gl = @graph.graph_lines.new
+			= form_for gl do |f|
+				= f.hidden_field :graph_id
+				= f.hidden_field :source_id, :value => s.id
+				= f.label :name
+				= f.text_field :name
+				= f.label :sortindex, "Sortindex"
+				= f.text_field :sortindex
+				= f.label :color
+				= f.text_field :color
+				= f.submit

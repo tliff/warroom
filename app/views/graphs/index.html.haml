@@ -1,0 +1,13 @@
+- if @graphs.size > 0
+	%ul
+		- @graphs.each do |g|
+			%li
+				Graph:
+				%em=g.name
+				=link_to "show", graph_path(g) 
+				=link_to "edit", edit_graph_path(g)
+				=link_to "delete", g, :confirm => "Are you sure you want to delete this graph?", :method => :delete
+- else
+	No graphs defined
+
+= link_to "Add new Graph", new_graph_path

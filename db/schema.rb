@@ -9,13 +9,28 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20100416174202) do
+ActiveRecord::Schema.define(:version => 20100612201335) do
+
+  create_table "graph_lines", :force => true do |t|
+    t.string   "name"
+    t.integer  "sortindex"
+    t.string   "color"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "graph_id"
+    t.integer  "source_id"
+  end
+
+  create_table "graphs", :force => true do |t|
+    t.string   "name"
+    t.string   "stack_type"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "samples", :force => true do |t|
     t.integer  "source_id"
     t.float    "value"
-    t.string   "sample_type"
-    t.string   "unit"
     t.datetime "sampled_at"
     t.datetime "created_at"
     t.datetime "updated_at"
