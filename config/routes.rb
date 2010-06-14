@@ -4,7 +4,11 @@ Warroom::Application.routes.draw do |map|
   
   resources :reports
   resources :graphs do
-    resources :graph_lines
+    resources :graph_lines do
+      member do
+        get :day
+      end
+    end
   end
 
   root :to => "graphs#index"

@@ -1,6 +1,13 @@
-function WGraph(container, graph_id,line_ids){
+function WGraph(container, graph_id,line_ids, timeframe){
 	this.container = container;
 	this.line_ids = line_ids;
+
+	var intervalls = {
+		day: 24*60*60*1000,
+		week: 7*24*60*60*1000,
+		quarter: 90*24*60*60*1000,
+		year: 395*24*60*60*1000
+	};
 
 	var options = {
 		legend: { show: false },
@@ -14,7 +21,9 @@ function WGraph(container, graph_id,line_ids){
 			color: "#ff0000"
 		},
 		xaxis: {
-			mode: 'time'
+			mode: 'time',
+			max: Date.now(),
+			min: Date.now()-intervalls[timeframe]
 		},
 		grid: {
 			show: true,
@@ -32,7 +41,7 @@ function WGraph(container, graph_id,line_ids){
 	var cumulativeData = [];
 	//FIXME: this should be ordered by the sortindex
 	$.each(line_ids,function(index, line_id){
-		$.getJSON("/graphs/"+graph_id+"/graph_lines/"+line_id.id+".json", function(data){
+		$.getJSON("/graphs/"+graph_id+"/graph_lines/"+line_id.id+"/"+timeframe+".json", function(data){
 			doneCount++;
 			addLine(splitDiscontinuity(data));
 			if(doneCount == targetCount){

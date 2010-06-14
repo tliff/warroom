@@ -18,4 +18,18 @@ class GraphLinesController < ApplicationController
       end
     end
   end
+  
+  def day
+    @graph_line = GraphLine.find(params[:id])
+    respond_to do |format|
+      format.json do
+        render :json => { :sortindex => @graph_line.sortindex, 
+                          :color => @graph_line.color, 
+                          :fillColor => @graph_line.color, 
+                          :label => @graph_line.name, 
+                          :data => @graph_line.source.samples.where(["sampled_at > ?", 1.day.ago]).map{|s| [s.sampled_at.to_i*1000, s.value]}}
+      end
+    end
+  end
+
 end
