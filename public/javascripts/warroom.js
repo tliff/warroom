@@ -37,7 +37,7 @@ function WGraph(container, graph_id,line_ids){
 			addLine(splitDiscontinuity(data));
 			if(doneCount == targetCount){
 				console.log(cumulativeData);
-				this.plot = $.plot($('#placeholder'), cumulativeData, options);
+				this.plot = $.plot($('#placeholder'), cumulativeData.sort(function(a,b){return a.sortindex-b.sortindex;}), options);
 			}
 		});
 	});

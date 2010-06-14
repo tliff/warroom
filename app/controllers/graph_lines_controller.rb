@@ -14,7 +14,7 @@ class GraphLinesController < ApplicationController
     @graph_line = GraphLine.find(params[:id])
     respond_to do |format|
       format.json do
-        render :json => {:color => @graph_line.color, :fillColor => @graph_line.color, :label => @graph_line.name, :data => @graph_line.source.samples.map{|s| [s.sampled_at.to_i*1000, s.value]}}
+        render :json => {:sortindex => @graph_line.sortindex, :color => @graph_line.color, :fillColor => @graph_line.color, :label => @graph_line.name, :data => @graph_line.source.samples.map{|s| [s.sampled_at.to_i*1000, s.value]}}
       end
     end
   end
