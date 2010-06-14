@@ -1,6 +1,7 @@
 class GraphLinesController < ApplicationController
   def create
-    @graph_line = GraphLine.create(params[:graph_line])
+    @graph = Graph.find(params[:graph_id])
+    @graph_line = @graph.graph_lines.create(params[:graph_line])
     if @graph_line.save
       flash[:notice] = "Source has been added to Graph"
     else

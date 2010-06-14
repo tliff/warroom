@@ -28,19 +28,39 @@ function WGraph(container, graph_id,line_ids){
 		}
 	};
 	var targetCount = line_ids.length;
+	var doneCount = 0;
 	var cumulativeData = [];
+	//FIXME: this should be ordered by the sortindex
 	$.each(line_ids,function(index, line_id){
 		$.getJSON("/graphs/"+graph_id+"/graph_lines/"+line_id.id+".json", function(data){
-			addLine(data);
+			doneCount++;
+			addLine(splitDiscontinuity(data));
+			if(doneCount == targetCount){
+				console.log(cumulativeData);
+				this.plot = $.plot($('#placeholder'), cumulativeData, options);
+			}
 		});
 	});
 	
+	function splitDiscontinuity(data){
+		var returndata = [];
+		var lastdate = null;
+		var timeout = 600*1000;
+		while(data.data.length > 0){
+			sample = data.data.shift();
+			if(lastdate && ((lastdate+timeout) < sample[0])){
+				returndata.push(null);
+			}
+			returndata.push(sample);
+			lastdate = sample[0];
+		}
+		i=0;
+		data.data = returndata;
+		return data;
+	}
+	
 	function addLine(data){
 		cumulativeData.push(data);
-		if(cumulativeData.length == targetCount){
-			console.log(cumulativeData);
-			this.plot = $.plot($('#placeholder'), cumulativeData, options);
-		}
 	}
 
 

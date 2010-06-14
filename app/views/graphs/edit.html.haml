@@ -14,12 +14,11 @@
 	
 %h4 Add Source
 %ul
-	-@sources.each do |s|
+	-@sources.reject{|s| @graph.graph_lines.map{|gl| gl.source}.member?(s)}.each do |s|
 		%li
 			= s.identifier
 			-gl = @graph.graph_lines.new
-			= form_for gl do |f|
-				= f.hidden_field :graph_id
+			= form_for [@graph, gl] do |f|
 				= f.hidden_field :source_id, :value => s.id
 				= f.label :name
 				= f.text_field :name
