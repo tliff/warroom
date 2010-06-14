@@ -8,6 +8,6 @@ gem 'nokogiri'
 gem 'haml'
 gem 'crack'
 
-#group :production do
-#  gem 'pg'
-#end
+group :production do
+  gem 'pg'
+end
