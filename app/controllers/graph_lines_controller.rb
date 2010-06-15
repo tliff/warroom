@@ -1,4 +1,4 @@
-class @graph.graph_linessController < ApplicationController
+class GraphLinesController < ApplicationController
   before_filter [:authenticate_user!, :setup_graph]
   private
   def setup_graph

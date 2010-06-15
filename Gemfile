@@ -7,7 +7,8 @@ gem 'capistrano'
 gem 'nokogiri'
 gem 'haml'
 gem 'crack'
-gem 'devise'
+gem 'warden'
+gem 'devise', '1.1.rc1'
 gem 'cancan'
 
 group :production do
