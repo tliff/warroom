@@ -29,9 +29,6 @@ class Source < ActiveRecord::Base
     mapped = unmapped.map{|s|
       [s.sampled_at.to_i*1000, s.value]
     }
-    
-    logger.info{unmapped.to_a.to_yaml}
-    logger.info{mapped.to_a.to_yaml}
     mapped
   end
 end
