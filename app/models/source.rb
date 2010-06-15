@@ -20,4 +20,16 @@ class Source < ActiveRecord::Base
     end
     tmptree
   end
+  
+  def reduced_data(i,date)
+    unmapped = samples.select("AVG(value) AS value, AVG((FLOOR(EXTRACT('epoch' FROM sampled_at)/#{i}))) AS sampled_at").
+    where(["sampled_at > ?", date]).
+    group("(FLOOR(EXTRACT('epoch' FROM sampled_at)/#{i}))").
+    order('sampled_at ASC')
+    
+    logger.info{unmapped}
+    unmapped.map{|s|
+      [s.sampled_at.to_i*1000, s.value]
+    }
+  end
 end

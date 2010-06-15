@@ -1,5 +1,4 @@
 class ReportsController < ApplicationController
-  before_filter :authenticate_user!
   def create
     data = Crack::JSON.parse(params[:data])
     if !(@secret = Secret.find_by_secret(params[:secret]) )

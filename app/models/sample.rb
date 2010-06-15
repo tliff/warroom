@@ -11,7 +11,7 @@ class Sample < ActiveRecord::Base
 
   def self.create_from_webpush(d,secret)
     user = secret.user
-    source = Source.find_or_create_by_identifier_and_user(d['identifier'], user)
+    source = Source.find_or_create_by_identifier_and_user_id(d['identifier'], user.id)
     d['source_id'] = source.id
     create(d.delete_if{|k,v| ['type', 'identifier'].member?(k)})
   end
