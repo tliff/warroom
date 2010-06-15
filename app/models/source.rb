@@ -27,7 +27,7 @@ class Source < ActiveRecord::Base
     group("(FLOOR(EXTRACT('epoch' FROM sampled_at)/#{i}))").
     order('sampled_at ASC')
     
-    logger.info{unmapped.to_a}
+    logger.info{unmapped.to_a.to_yml}
     unmapped.map{|s|
       [s.sampled_at.to_i*1000, s.value]
     }
