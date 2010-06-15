@@ -1,13 +1,9 @@
 class GraphLinesController < ApplicationController
-  before_filter [:authenticate_user!, :setup_graph]
-  private
-  def setup_graph
-    @graph = current_user.graphs.find params[:graph_id]
-    return if @graph
-  end
+  before_filter :authenticate_user!
   
-  public
   def create
+    @graph = current_user.graphs.find params[:graph_id]
+    return if !@graph
     @graph_line = @graph.graph_lines.create(params[:graph_line])
     if @graph_line.save
       flash[:notice] = "Source has been added to Graph"
@@ -18,6 +14,8 @@ class GraphLinesController < ApplicationController
   end
   
   def destroy
+    @graph = current_user.graphs.find params[:graph_id]
+    return if !@graph
     @graph_line = @graph.graph_lines.find(params[:id])
     @graph_line.delete
     respond_to do |format|
@@ -29,6 +27,8 @@ class GraphLinesController < ApplicationController
   end
   
   def edit
+    @graph = current_user.graphs.find params[:graph_id]
+    return if !@graph
     @graph_line = @graph.graph_lines.find params[:id]
     respond_to do |format|
       format.js do
@@ -38,6 +38,8 @@ class GraphLinesController < ApplicationController
   end
 
   def update
+    @graph = current_user.graphs.find params[:graph_id]
+    return if !@graph
     @graph_line = @graph.graph_lines.find params[:id]
     @graph_line.update_attributes(params[:graph_line])
     @graph_line.save
@@ -49,6 +51,8 @@ class GraphLinesController < ApplicationController
   end
 
   def show
+    @graph = current_user.graphs.find params[:graph_id]
+    return if !@graph
     @graph_line = @graph.graph_lines.find(params[:id])
     respond_to do |format|
       format.json do
@@ -79,6 +83,8 @@ class GraphLinesController < ApplicationController
 
   private
   def show_template(i, date)
+    @graph = current_user.graphs.find params[:graph_id]
+    return if !@graph
     @graph_line = @graph.graph_lines.find(params[:id])
     respond_to do |format|
       format.json do
