@@ -92,7 +92,7 @@ class GraphLinesController < ApplicationController
                           :color => @graph_line.color, 
                           :fillColor => @graph_line.color, 
                           :label => @graph_line.name, 
-                          :data => @graph_line.source.samples.select("AVG(values) AS values, AVG((FLOOR(EXTRACT('epoch' FROM sampled_at)/#{i}))").where(["sampled_at > ?", date]).group("(FLOOR(EXTRACT('epoch' FROM sampled_at)/#{i})").map{|s| [s.sampled_at.to_i*1000, s.value]}}
+                          :data => @graph_line.source.samples.select("AVG(values) AS values, AVG((FLOOR(EXTRACT('epoch' FROM sampled_at)/#{i}))) AS sampled_at").where(["sampled_at > ?", date]).group("(FLOOR(EXTRACT('epoch' FROM sampled_at)/#{i}))").map{|s| [s.sampled_at.to_i*1000, s.value]}}
       end
     end    
   end
