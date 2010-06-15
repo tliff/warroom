@@ -22,7 +22,7 @@ class Source < ActiveRecord::Base
   end
   
   def reduced_data(i,date)
-    unmapped = samples.select("AVG(value) AS value, TIMESTAMP 'epoch' + AVG((FLOOR(EXTRACT('epoch' FROM sampled_at)/#{i}))) * INTERVAL '1 second' AS sampled_at").
+    unmapped = samples.select("AVG(value) AS value, TIMESTAMP 'epoch' + AVG((FLOOR(EXTRACT('epoch' FROM sampled_at)))) * INTERVAL '1 second' AS sampled_at").
     where(["sampled_at > ?", date]).
     group("(FLOOR(EXTRACT('epoch' FROM sampled_at)/#{i}))").
     order('sampled_at ASC')
