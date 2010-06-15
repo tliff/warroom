@@ -8,3 +8,15 @@ body {
     padding: 0px;
     margin: 0px;
     font-weight: bold; }
+  body .graphic_edit_link {
+    display: block;
+    height: 15px;
+    text-indent: -10000px;
+    width: 15px;
+    background: url("/images/edit_button_white.gif") repeat scroll 0 0 transparent; }
+  body .graphic_delete_link {
+    display: block;
+    height: 15px;
+    text-indent: -10000px;
+    width: 15px;
+    background: url("/images/delete_button_white.gif") repeat scroll 0 0 transparent; }

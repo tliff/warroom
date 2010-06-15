@@ -6,4 +6,4 @@
 		%li
 			=f.label :stack_type
 			=f.select :stack_type, options_for_select({ "Area Stack"=> "area", "Normalized Stack Area" => "normalizedarea", "Lines" => "lines"})
-	=f.submit "Create"
+	=f.submit @graph.new_record? ? 'Create' : 'Update'

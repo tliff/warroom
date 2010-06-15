@@ -9,6 +9,40 @@ class GraphLinesController < ApplicationController
     end
     redirect_to graph_path(@graph_line.graph)
   end
+  
+  def destroy
+    @graph = params[:graph_id]
+    @graph_line = GraphLine.find(params[:id])
+    @graph_line.delete
+    respond_to do |format|
+      format.js do
+        render :layout => false 
+      end
+    end
+    
+  end
+  
+  def edit
+    @graph = Graph.find params[:graph_id]
+    @graph_line = GraphLine.find params[:id]
+    respond_to do |format|
+      format.js do
+        render :layout => false 
+      end
+    end
+  end
+
+  def update
+    @graph = Graph.find params[:graph_id]
+    @graph_line = GraphLine.find params[:id]
+    @graph_line.update_attributes(params[:graph_line])
+    @graph_line.save
+    respond_to do |format|
+      format.js do
+        render :layout => false 
+      end
+    end
+  end
 
   def show
     @graph_line = GraphLine.find(params[:id])

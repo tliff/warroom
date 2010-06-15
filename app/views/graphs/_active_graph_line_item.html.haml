@@ -1,0 +1,4 @@
+= active_graph_line_item.name
+%span{:style => "color:#{active_graph_line_item.color}"} COLOR
+=link_to "", edit_graph_graph_line_path(@graph, active_graph_line_item), {:class => "graphic_edit_link", :remote => true}
+=link_to "", graph_graph_line_path(@graph, active_graph_line_item), {:remote => true, :class => "graphic_delete_link", :method => :delete, :confirm => "Really remove this line from the Graph?"}  

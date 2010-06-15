@@ -1,0 +1,27 @@
+%ul#active_lines_sortable.lines_sortable
+	-if @graph.graph_lines.size > 0
+		-@graph.graph_lines.each do |gl|
+			%li.ui-state-default[gl]
+				=render :partial => "active_graph_line_item", :object => gl  
+	-else
+		No sources defined yet.
+:javascript
+	$('#active_lines_sortable').sortable({
+		receive: function(event,ui){
+			console.log('receive');
+			console.log(event);
+			console.log(ui);
+
+		},
+		update: function(event,ui){
+			$('#active_lines_sortable').sortable('disable');
+			console.log('update');
+			$.ajax({
+				url: '/graphs/#{@graph.id}/updatesources',
+				data: {
+					order: $('#active_lines_sortable').sortable('toArray').join(';')
+					},
+				type: 'POST'
+			});
+		}
+	});

@@ -1,29 +1,32 @@
 %h2 Edit Graph #{@graph.name}
-=render :partial => 'form'
--if @graph.graph_lines.size > 0
-	%ul
-		-@graph.graph_lines.each do |gl|
-			%li
-				= gl.name
-				%span{:style => "color:#{gl.color}"} COLOR
-				=link_to "edit"
-				=link_to "delete"
 
--else
-	No sources defined
+%h4 Properties
+=render :partial => 'form'
+
+%h4 Active Sources
+
+=render :partial => "active_graph_lines" 
 	
-%h4 Add Source
-%ul
-	-@sources.reject{|s| @graph.graph_lines.map{|gl| gl.source}.member?(s)}.each do |s|
-		%li
+%h4 Inactive Sources
+%ul#inactive_lines_sortable.lines_sortable
+	- Source.all.reject{|s| @graph.graph_lines.map(&:source) == s}.each do |s|
+		%li.ui-state-default[s]{"data-source_id" => s.id}
 			= s.identifier
-			-gl = @graph.graph_lines.new
-			= form_for [@graph, gl] do |f|
-				= f.hidden_field :source_id, :value => s.id
-				= f.label :name
-				= f.text_field :name
-				= f.label :sortindex, "Sortindex"
-				= f.text_field :sortindex
-				= f.label :color
-				= f.text_field :color
-				= f.submit
+	:javascript
+		$('#inactive_lines_sortable').sortable({connectWith: '.lines_sortable'});	
+-#
+	%h4 Add Source from Tree
+	#treecontainer
+	:javascript
+		$('#treecontainer').jstree({
+			"json_data" : {
+				"data" : #{ActiveSupport::JSON::encode(Source.tree)}
+			},
+			"themes" : {
+				"theme" : "default",
+				"dots" : true,
+				"icons" : false,
+				"url" : "/stylesheets/tree/style.css"
+			},
+			"plugins" : [ "themes", "json_data" ]
+		});

@@ -1,15 +1,21 @@
 class Source < ActiveRecord::Base
   has_many :samples
   def self.tree
-    tmptree = {}
-    find(:all, :select => "identifier, id").each{|source|
-      i =  source.identifier.to_s.split(':')
-      p = tmptree
-      while key = i.shift do
-        p = (p[key.to_sym] ||= {})
+    tmptree = []
+    sources = find(:all, :select => "identifier, id")
+    sources.map{|s| s.identifier.to_s.split(':')}.sort{|a,b| a.length <=> b.length}.each do |source|
+      i = tmptree
+      while source.length > 0 do
+        k = source.shift
+        if ! i.select{|item| item[:data] == k}.empty?
+          logger.info{'found'}
+        else
+          logger.info{'not found'}
+          i << {:data => k, :children => []}
+        end
+        i = i.select{|item| item[:data] == k}.first[:children]
       end
-      p[:source] = source
-    }
+    end
     tmptree
   end
 end
