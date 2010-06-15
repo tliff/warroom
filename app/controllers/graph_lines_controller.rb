@@ -1,6 +1,13 @@
-class GraphLinesController < ApplicationController
+class @graph.graph_linessController < ApplicationController
+  before_filter [:authenticate_user!, :setup_graph]
+  private
+  def setup_graph
+    @graph = current_user.graphs.find params[:graph_id]
+    return if @graph
+  end
+  
+  public
   def create
-    @graph = Graph.find(params[:graph_id])
     @graph_line = @graph.graph_lines.create(params[:graph_line])
     if @graph_line.save
       flash[:notice] = "Source has been added to Graph"
@@ -11,8 +18,7 @@ class GraphLinesController < ApplicationController
   end
   
   def destroy
-    @graph = params[:graph_id]
-    @graph_line = GraphLine.find(params[:id])
+    @graph_line = @graph.graph_lines.find(params[:id])
     @graph_line.delete
     respond_to do |format|
       format.js do
@@ -23,8 +29,7 @@ class GraphLinesController < ApplicationController
   end
   
   def edit
-    @graph = Graph.find params[:graph_id]
-    @graph_line = GraphLine.find params[:id]
+    @graph_line = @graph.graph_lines.find params[:id]
     respond_to do |format|
       format.js do
         render :layout => false 
@@ -33,8 +38,7 @@ class GraphLinesController < ApplicationController
   end
 
   def update
-    @graph = Graph.find params[:graph_id]
-    @graph_line = GraphLine.find params[:id]
+    @graph_line = @graph.graph_lines.find params[:id]
     @graph_line.update_attributes(params[:graph_line])
     @graph_line.save
     respond_to do |format|
@@ -45,7 +49,7 @@ class GraphLinesController < ApplicationController
   end
 
   def show
-    @graph_line = GraphLine.find(params[:id])
+    @graph_line = @graph.graph_lines.find(params[:id])
     respond_to do |format|
       format.json do
         render :json => {:sortindex => @graph_line.sortindex, :color => @graph_line.color, :fillColor => @graph_line.color, :label => @graph_line.name, :data => @graph_line.source.samples.map{|s| [s.sampled_at.to_i*1000, s.value]}}
@@ -54,16 +58,37 @@ class GraphLinesController < ApplicationController
   end
   
   def day
-    @graph_line = GraphLine.find(params[:id])
+    show_template(300,1.day.ago)
+  end
+  
+  def week
+    show_template(1800,1.week.ago)
+  end
+  
+  def month
+    show_template(7200,1.month.ago)
+  end
+  
+  def quarter
+    show_template(28800,3.months.ago)
+  end
+  
+  def year
+    show_template(86400,1.year.ago)
+  end
+
+  private
+  def show_template(i, date)
+    @graph_line = @graph.graph_lines.find(params[:id])
     respond_to do |format|
       format.json do
         render :json => { :sortindex => @graph_line.sortindex, 
                           :color => @graph_line.color, 
                           :fillColor => @graph_line.color, 
                           :label => @graph_line.name, 
-                          :data => @graph_line.source.samples.where(["sampled_at > ?", 1.day.ago]).map{|s| [s.sampled_at.to_i*1000, s.value]}}
+                          :data => @graph_line.source.samples.select("AVG(values) AS values, AVG((FLOOR(EXTRACT('epoch' FROM sampled_at)/#{i}))").where(["sampled_at > ?", date]).group("(FLOOR(EXTRACT('epoch' FROM sampled_at)/#{i})").map{|s| [s.sampled_at.to_i*1000, s.value]}}
       end
-    end
+    end    
   end
 
 end

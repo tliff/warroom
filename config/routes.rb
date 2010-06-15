@@ -1,8 +1,13 @@
 Warroom::Application.routes.draw do |map|
+  devise_for :users
+
 
   resources :sources
   
   resources :reports
+
+  resources :secrets
+
   resources :graphs do
     member do
       post :updatesources      
@@ -14,6 +19,6 @@ Warroom::Application.routes.draw do |map|
     end
   end
 
-  root :to => "graphs#index"
+  root :to => "info#index"
 
 end

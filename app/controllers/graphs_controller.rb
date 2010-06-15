@@ -1,15 +1,16 @@
 class GraphsController < ApplicationController
+  before_filter :authenticate_user!
   def index
-    @graphs = Graph.all
+    @graphs = current_user.graphs
   end
   
   def new
-    @graph = Graph.new
+    @graph = current_user.graph.new
   end
   
   def edit
-    @graph = Graph.find(params[:id])
-    @sources = Source.all
+    @graph = current_user.graphs.find(params[:id])
+    @sources = current_user.sources
   end
   
   def update
@@ -17,7 +18,7 @@ class GraphsController < ApplicationController
   end
   
   def create
-    @graph = Graph.new(params[:graph])
+    @graph = current_user.graphs.new(params[:graph])
     if @graph.save
       flash[:notice] = "Graph has been created..."
     else
@@ -27,11 +28,11 @@ class GraphsController < ApplicationController
   end
 
   def show
-    @graph = Graph.find(params[:id])
+    @graph = current_user.graphs.find(params[:id])
   end
   
   def updatesources
-    @graph = Graph.find(params[:id])
+    @graph = current_users.graphs.find(params[:id])
     order = params[:order].split(';')
     graph_lines = []
     i=0

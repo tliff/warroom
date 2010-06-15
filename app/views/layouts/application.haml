@@ -17,7 +17,14 @@
 		
 	%body
 		%h1 THE WAR ROOM
-		%ul
-			=link_to "List Graphs", graphs_path
+		-if current_user
+			%ul
+				%li=link_to "List Graphs", graphs_path
+				%li=link_to "Manage Secrets", secrets_path
+				%li=link_to "Logout", destroy_user_session_path
+		-else
+			%ul
+				%li=link_to "Login", new_user_session_path
+				%li=link_to "Register", new_user_registration_path
 		%hr
 		= yield

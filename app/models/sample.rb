@@ -9,8 +9,9 @@ class Sample < ActiveRecord::Base
     self.sampled_at = Time.at(t)
   end
 
-  def self.create_from_webpush(d)
-    source = Source.find_or_create_by_identifier(d['identifier'])
+  def self.create_from_webpush(d,secret)
+    user = secret.user
+    source = Source.find_or_create_by_identifier_and_user(d['identifier'], user)
     d['source_id'] = source.id
     create(d.delete_if{|k,v| ['type', 'identifier'].member?(k)})
   end

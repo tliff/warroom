@@ -1,5 +1,7 @@
 class Source < ActiveRecord::Base
-  has_many :samples
+  has_many :samples, :dependent => :destroy 
+  belongs_to :user
+
   def self.tree
     tmptree = []
     sources = find(:all, :select => "identifier, id")

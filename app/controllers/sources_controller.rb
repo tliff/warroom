@@ -1,6 +1,7 @@
 class SourcesController < ApplicationController
+  before_filter :authenticate_user!
   def index
-    @tree = Source.tree
+    @tree = current_user.sources.tree
   end
   
   def create
@@ -12,6 +13,6 @@ class SourcesController < ApplicationController
   end
   
   def show
-    @source = Source.find(params[:id])
+    @source = current_user.sources.find(params[:id])
   end
 end

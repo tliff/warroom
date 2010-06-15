@@ -7,6 +7,8 @@ gem 'capistrano'
 gem 'nokogiri'
 gem 'haml'
 gem 'crack'
+gem 'devise'
+gem 'cancan'
 
 group :production do
   gem 'pg'
