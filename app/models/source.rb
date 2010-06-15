@@ -26,10 +26,12 @@ class Source < ActiveRecord::Base
     where(["sampled_at > ?", date]).
     group("(FLOOR(EXTRACT('epoch' FROM sampled_at)/#{i}))").
     order('sampled_at ASC')
-    
-    logger.info{unmapped.to_a.to_yaml}
-    unmapped.map{|s|
+    mapped = unmapped.map{|s|
       [s.sampled_at.to_i*1000, s.value]
     }
+    
+    logger.info{unmapped.to_a.to_yaml}
+    logger.info{mapped.to_a.to_yaml}
+    mapped
   end
 end
