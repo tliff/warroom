@@ -13,7 +13,7 @@ function WGraph(container, graph_id,line_ids, timeframe, type){
 		legend: { show: false },
 		series: {
 			lines: { 
-				lineWidth: 0,
+				lineWidth: 2,
 				fill: 0.0,
 				show: true,
 			},
@@ -39,6 +39,7 @@ function WGraph(container, graph_id,line_ids, timeframe, type){
 	if(type == 'area'){
 	  options.series.stack=true;
 	  options.series.lines.fill=0.9;
+	  options.series.lines.lineWideth=0;
 	}
 	var targetCount = line_ids.length;
 	var doneCount = 0;
