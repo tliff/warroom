@@ -2,4 +2,4 @@
 
 %div#placeholder{:style => "width: 600px; height: 300px; position: relative;"}
 :javascript
-	graph_#{@graph.id} = new WGraph($('#placeholder'), #{@graph.id}, #{@graph.graph_lines.map{|l| {:id => l.id}}.to_json}, 'day', #{@graph.stack_type});
+	graph_#{@graph.id} = new WGraph($('#placeholder'), #{@graph.id}, #{@graph.graph_lines.map{|l| {:id => l.id}}.to_json}, 'day', '#{@graph.stack_type}');
