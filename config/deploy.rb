@@ -21,6 +21,6 @@ end
 
 namespace :deploy do
   task :restart do
-    sudo "killall -HUP unicorn || true"
+    sudo "killall -USR2 unicorn_rails || true"
   end  
 end
