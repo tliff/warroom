@@ -50,7 +50,7 @@ function WGraph(container, graph_id,line_ids, timeframe, type){
 			doneCount++;
 			addLine(splitDiscontinuity(data));
 			if(doneCount == targetCount){
-				this.plot = $.plot($('#placeholder'), cumulativeData.sort(function(a,b){return a.sortindex-b.sortindex;}), options);
+				this.plot = $.plot($('#placeholder'), cumulativeData.sort(function(a,b){return b.sortindex-a.sortindex;}), options);
 			}
 		});
 	});
