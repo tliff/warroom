@@ -14,7 +14,7 @@ function WGraph(container, graph_id,line_ids, timeframe, type){
 		series: {
 			lines: { 
 				lineWidth: 0,
-				fill: 0.9,
+				fill: 0.0,
 				show: true,
 			},
 			color: "#ff0000"
@@ -38,6 +38,7 @@ function WGraph(container, graph_id,line_ids, timeframe, type){
 	
 	if(type == 'area'){
 	  options.series.stack=true;
+	  options.series.lines.fill=0.9;
 	}
 	var targetCount = line_ids.length;
 	var doneCount = 0;
