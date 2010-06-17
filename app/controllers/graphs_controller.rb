@@ -14,7 +14,14 @@ class GraphsController < ApplicationController
   end
   
   def update
-    
+    @graph = current_user.graphs.find(params[:id])
+    @graph.update_attributes(params[:graph])
+    if @graph.save
+      flash[:notice] = "Graph has been created..."
+    else
+      flash[:error] = "Could not create Graph"
+    end
+    redirect_to edit_graph_path(@graph)
   end
   
   def create
