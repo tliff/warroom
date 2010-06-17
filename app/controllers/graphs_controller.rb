@@ -13,6 +13,16 @@ class GraphsController < ApplicationController
     @sources = current_user.sources
   end
   
+  def destroy
+    @graph = current_user.graphs.find(params[:id])
+    if @graph.delete
+      flash[:notice] = "Graph has been deleted..."
+    else
+      flash[:error] = "Could not delete Graph"
+    end
+    redirect_to graphs_path
+  end
+  
   def update
     @graph = current_user.graphs.find(params[:id])
     @graph.update_attributes(params[:graph])
