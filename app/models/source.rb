@@ -21,14 +21,32 @@ class Source < ActiveRecord::Base
     tmptree
   end
   
-  def reduced_data(i,date)
-    unmapped = samples.select("AVG(value) AS value, TIMESTAMP 'epoch' + AVG((FLOOR(EXTRACT('epoch' FROM sampled_at)))) * INTERVAL '1 second' AS sampled_at").
+  def reduced_data_pg(i,date)
+    samples.select("AVG(value) AS value, TIMESTAMP 'epoch' + AVG((FLOOR(EXTRACT('epoch' FROM sampled_at)))) * INTERVAL '1 second' AS sampled_at").
     where(["sampled_at > ?", date]).
     group("(FLOOR(EXTRACT('epoch' FROM sampled_at)/#{i}))").
-    order('sampled_at ASC')
-    mapped = unmapped.map{|s|
+    order('sampled_at ASC').map{|s|
       [s.sampled_at.to_i*1000, s.value]
     }
-    mapped
   end
+
+  def reduced_data_mysql(i,date)
+    samples.select("AVG(value) AS value,  AVG((FLOOR(sampled_at))) AS sampled_at").
+    where(["sampled_at > ?", date]).
+    group("(FLOOR(sampled_at/#{i}))").
+    order('sampled_at ASC').map{|s|
+      [s.sampled_at.to_i*1000, s.value]
+    }    
+  end
+  
+  def reduced_data(i,date)
+    if self.connection.adapter_name == 'PostgreSQL'
+      reduced_data_pg(i,date)
+    elsif self.connection.adapter_name == 'MySQL'
+      reduced_data_mysql(i,date)
+    else
+      raise 'Unimplemented!'
+    end
+  end
+
 end

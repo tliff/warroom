@@ -1,4 +1,4 @@
-function WGraph(container, graph_id,line_ids, timeframe){
+function WGraph(container, graph_id,line_ids, timeframe, type){
 	this.container = container;
 	this.line_ids = line_ids;
 
@@ -12,7 +12,6 @@ function WGraph(container, graph_id,line_ids, timeframe){
 	var options = {
 		legend: { show: false },
 		series: {
-			stack: true,
 			lines: { 
 				lineWidth: 0,
 				fill: 0.9,
@@ -36,6 +35,10 @@ function WGraph(container, graph_id,line_ids, timeframe){
 			autoHighlight: false
 		}
 	};
+	
+	if(type == 'area'){
+	  options.series.stack=true;
+	}
 	var targetCount = line_ids.length;
 	var doneCount = 0;
 	var cumulativeData = [];

@@ -5,7 +5,7 @@ class GraphsController < ApplicationController
   end
   
   def new
-    @graph = current_user.graph.new
+    @graph = current_user.graphs.new
   end
   
   def edit
@@ -32,7 +32,7 @@ class GraphsController < ApplicationController
   end
   
   def updatesources
-    @graph = current_users.graphs.find(params[:id])
+    @graph = current_user.graphs.find(params[:id])
     order = params[:order].split(';')
     graph_lines = []
     i=0
@@ -40,6 +40,7 @@ class GraphsController < ApplicationController
       if matches = /graph_line_(\d+)/.match(o)
         gl = GraphLine.find(matches[1])
         gl.sortindex = i
+        gl.save if gl.changed?
         graph_lines << gl.id
       elsif matches = /source_(\d+)/.match(o)
         source = Source.find(matches[1])
