@@ -12,7 +12,6 @@
 		},
 		update: function(event,ui){
 			$('#active_lines_sortable').sortable('disable');
-			console.log('update');
 			$.ajax({
 				url: '/graphs/#{@graph.id}/updatesources',
 				data: {
