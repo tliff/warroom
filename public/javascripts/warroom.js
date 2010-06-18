@@ -24,6 +24,9 @@ function WGraph(container, graph_id,line_ids, timeframe, type){
 			max: Date.now(),
 			min: Date.now()-intervalls[timeframe]
 		},
+		yaxis: {
+		  min: 0
+		},
 		grid: {
 			show: true,
 			aboveData: false,

@@ -1,13 +1,11 @@
 - if @graphs.size > 0
-	%ul
-		- @graphs.each do |g|
-			%li
-				=render :partial => g 
-				Graph:
-				%em=g.name
-				=link_to "show", graph_path(g) 
-				=link_to "edit", edit_graph_path(g)
-				=link_to "delete", g, :confirm => "Are you sure you want to delete this graph?", :method => :delete
+	- @graphs.each do |g|
+		%h4=g.name
+		=render :partial => g 
+		=link_to "show", graph_path(g) 
+		=link_to "edit", edit_graph_path(g)
+		=link_to "delete", g, :confirm => "Are you sure you want to delete this graph?", :method => :delete
+		%hr
 - else
 	No graphs defined
 
