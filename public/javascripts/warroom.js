@@ -1,4 +1,4 @@
-function WGraph(container, graph_id,line_ids, timeframe, type){
+function WGraph(container, legendcontainer, graph_id,line_ids, timeframe, type){
 	this.container = container;
 	this.line_ids = line_ids;
 
@@ -10,7 +10,15 @@ function WGraph(container, graph_id,line_ids, timeframe, type){
 	};
 
 	var options = {
-		legend: { show: false },
+		legend: {
+      show: true,
+      noColumns: 4, // number of colums in legend table
+      labelFormatter: null, // fn: string -> string
+      labelBoxBorderColor: "#ccc", // border color for the little label boxes
+      container: legendcontainer, // container (as jQuery object) to put legend in, null means default on top of graph
+      backgroundColor: null, // null means auto-detect
+      backgroundOpacity: 0.85 // set to 0 to avoid background
+    },
 		series: {
 			lines: { 
 				lineWidth: 2,
