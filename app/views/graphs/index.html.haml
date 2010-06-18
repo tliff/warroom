@@ -2,6 +2,7 @@
 	%ul
 		- @graphs.each do |g|
 			%li
+				=render :partial => g 
 				Graph:
 				%em=g.name
 				=link_to "show", graph_path(g) 
