@@ -39,18 +39,17 @@ function WGraph(container, graph_id,line_ids, timeframe, type){
 	if(type == 'area'){
 	  options.series.stack=true;
 	  options.series.lines.fill=0.9;
-	  options.series.lines.lineWideth=0;
+	  options.series.lines.lineWidth=0;
 	}
 	var targetCount = line_ids.length;
 	var doneCount = 0;
 	var cumulativeData = [];
-	//FIXME: this should be ordered by the sortindex
 	$.each(line_ids,function(index, line_id){
 		$.getJSON("/graphs/"+graph_id+"/graph_lines/"+line_id.id+"/"+timeframe+".json", function(data){
 			doneCount++;
 			addLine(splitDiscontinuity(data));
 			if(doneCount == targetCount){
-				this.plot = $.plot($('#placeholder'), cumulativeData.sort(function(a,b){return b.sortindex-a.sortindex;}), options);
+				this.plot = $.plot(container, cumulativeData.sort(function(a,b){return b.sortindex-a.sortindex;}), options);
 			}
 		});
 	});
