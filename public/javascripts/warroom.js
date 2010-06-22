@@ -68,7 +68,7 @@ function WGraph(container, legendcontainer, graph_id,line_ids, timeframe, type){
 	function splitDiscontinuity(data){
 		var returndata = [];
 		var lastdate = null;
-		var timeout = 600*1000;
+		var timeout = 600000*1000;
 		while(data.data.length > 0){
 			sample = data.data.shift();
 			if(lastdate && ((lastdate+timeout) < sample[0])){

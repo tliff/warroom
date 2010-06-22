@@ -15,6 +15,10 @@ Warroom::Application.routes.draw do |map|
     resources :graph_lines do
       member do
         get :day
+        get :week
+        get :month
+        get :quarter
+        get :year
       end
     end
   end

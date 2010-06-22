@@ -31,11 +31,11 @@ class Source < ActiveRecord::Base
   end
 
   def reduced_data_mysql(i,date)
-    samples.select("AVG(value) AS value,  AVG((FLOOR(sampled_at))) AS sampled_at").
+    samples.select("AVG(value) AS value,  FLOOR(AVG(UNIX_TIMESTAMP(sampled_at))) AS troet").
     where(["sampled_at > ?", date]).
     group("(FLOOR(sampled_at/#{i}))").
     order('sampled_at ASC').map{|s|
-      [s.sampled_at.to_i*1000, s.value]
+      [s.troet.to_i*1000, s.value]
     }    
   end
   

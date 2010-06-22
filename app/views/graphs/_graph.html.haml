@@ -1,4 +1,4 @@
 %div[graph, :placeholder]{:style => "width: 600px; height: 300px; position: relative;"}
 %div[graph, :legend_placeholder]{:style => "width: 600px; height: 100px; position: relative;"}
 :javascript
-	graph_#{graph.id} = new WGraph($('#placeholder_graph_#{graph.id}'), $('#legend_placeholder_graph_#{graph.id}'), #{graph.id}, #{graph.graph_lines.map{|l| {:id => l.id}}.to_json}, 'day', '#{graph.stack_type}');
+	graph_#{graph.id} = new WGraph($('#placeholder_graph_#{graph.id}'), $('#legend_placeholder_graph_#{graph.id}'), #{graph.id}, #{graph.graph_lines.map{|l| {:id => l.id}}.to_json}, 'week', '#{graph.stack_type}');
