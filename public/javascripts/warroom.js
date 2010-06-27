@@ -33,7 +33,8 @@ function WGraph(container, legendcontainer, graph_id,line_ids, timeframe, type){
 			min: Date.now()-intervalls[timeframe]
 		},
 		yaxis: {
-		  min: 0
+		  min: 0,
+		  labelWidth: 50
 		},
 		grid: {
 			show: true,
@@ -68,7 +69,7 @@ function WGraph(container, legendcontainer, graph_id,line_ids, timeframe, type){
 	function splitDiscontinuity(data){
 		var returndata = [];
 		var lastdate = null;
-		var timeout = 600000*1000;
+		var timeout = intervalls[timeframe]/100;
 		while(data.data.length > 0){
 			sample = data.data.shift();
 			if(lastdate && ((lastdate+timeout) < sample[0])){

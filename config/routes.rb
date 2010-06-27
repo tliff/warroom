@@ -12,6 +12,9 @@ Warroom::Application.routes.draw do |map|
     member do
       post :updatesources      
     end
+    resources :collaborators do
+      
+    end
     resources :graph_lines do
       member do
         get :day

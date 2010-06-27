@@ -1,0 +1,12 @@
+%div[sharing, :sharing]
+	-if sharing.collaborators.size == 0
+		This Graph is not shared with anyone.
+	-else
+		This graph is shared with:
+		%ul
+			-sharing.graph_shares.each do |graph_share|
+				%li[graph_share]
+					=graph_share.user.email
+					=link_to "remove", graph_collaborator_path(sharing, graph_share), :method => :delete, :remote => true 
+	=link_to "Add collaborator", new_graph_collaborator_path(sharing), :remote => true 
+	%div[sharing, :add_collaborator]

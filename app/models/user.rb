@@ -10,5 +10,8 @@ class User < ActiveRecord::Base
   has_many :secrets, :dependent => :destroy
   has_many :sources, :dependent => :destroy
   has_many :graphs, :dependent => :destroy
+  has_many :graph_shares, :dependent => :destroy
+  has_many :shared_graphs, :class_name => "Graph", :through => :graph_shares  
+
   
 end

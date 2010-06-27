@@ -1,0 +1,3 @@
+= form_for [@graph, @graph_share], :url => {:controller => :collaborators}, :remote => true do |f|
+	-f.label :user_email
+	-f.text_field :user_email

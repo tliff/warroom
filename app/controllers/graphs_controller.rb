@@ -1,7 +1,7 @@
 class GraphsController < ApplicationController
   before_filter :authenticate_user!
   def index
-    @graphs = current_user.graphs
+    @graphs = Graph.visible_to(current_user)
   end
   
   def new
@@ -45,7 +45,8 @@ class GraphsController < ApplicationController
   end
 
   def show
-    @graph = current_user.graphs.find(params[:id])
+    @graph = Graph.find(params[:id])
+    authorize! :show, @graph
   end
   
   def updatesources

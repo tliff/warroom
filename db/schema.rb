@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20100615151632) do
+ActiveRecord::Schema.define(:version => 20100622162746) do
 
   create_table "graph_lines", :force => true do |t|
     t.string   "name"
@@ -19,6 +19,14 @@ ActiveRecord::Schema.define(:version => 20100615151632) do
     t.datetime "updated_at"
     t.integer  "graph_id"
     t.integer  "source_id"
+  end
+
+  create_table "graph_shares", :force => true do |t|
+    t.integer  "user_id"
+    t.integer  "graph_id"
+    t.string   "status"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "graphs", :force => true do |t|
@@ -36,6 +44,8 @@ ActiveRecord::Schema.define(:version => 20100615151632) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  add_index "samples", ["sampled_at"], :name => "index_samples_on_sampled_at"
 
   create_table "secrets", :force => true do |t|
     t.string   "secret"
