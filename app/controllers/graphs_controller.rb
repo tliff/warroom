@@ -1,7 +1,7 @@
 class GraphsController < ApplicationController
   before_filter :authenticate_user!
   def index
-    @graphs = Graph.visible_to(current_user)
+    @graphs = current_user.graphs
   end
   
   def new
